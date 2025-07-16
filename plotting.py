@@ -35,6 +35,8 @@ for container in ax1.containers:
 plt.tight_layout()
 plt.show()
 plt.close(fig1)
+fig1.savefig("./insertvel.png")
+
 
 # --- Gráfico 2: Consultas simples ---
 fig2, ax2 = plt.subplots(figsize=(8, 5))
@@ -47,6 +49,7 @@ for container in ax2.containers:
 plt.tight_layout()
 plt.show()
 plt.close(fig2)
+fig2.savefig("./consultas_simples.png")
 
 # --- Gráfico 3: Conteos y agregaciones ---
 fig3, ax3 = plt.subplots(figsize=(8, 5))
@@ -59,6 +62,7 @@ for container in ax3.containers:
 plt.tight_layout()
 plt.show()
 plt.close(fig3)
+fig3.savefig("./agregacion_salario.png")
 
 # --- Gráfico 4: JSON y consultas complejas ---
 fig4, ax4 = plt.subplots(figsize=(8, 5))
@@ -71,3 +75,4 @@ for container in ax4.containers:
 plt.tight_layout()
 plt.show()
 plt.close(fig4)
+fig4.savefig("./json.png")
