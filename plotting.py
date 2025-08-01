@@ -1,15 +1,15 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Datos consolidados
+# Datos consolidados (sin MongoDB, con SQL Server)
 data = {
-    "Velocidad Inserción": {"MongoDB": 14870, "MySQL": 7508, "PostgreSQL": 9406},
-    "Búsqueda por email": {"MongoDB": 3, "MySQL": 1, "PostgreSQL": 2},
-    "Conteo por departamento": {"MongoDB": 7, "MySQL": 5, "PostgreSQL": 16},
-    "Búsqueda rango edad": {"MongoDB": 2, "MySQL": 1, "PostgreSQL": 2},
-    "Agregación salario promedio": {"MongoDB": 56, "MySQL": 174, "PostgreSQL": 35},
-    "Búsqueda en JSON": {"MySQL": 178, "PostgreSQL": 32},
-    "Consulta compleja": {"MySQL": 77, "PostgreSQL": 20}
+    "Velocidad Inserción": {"MySQL": 7508, "PostgreSQL": 9406, "SQL Server": 4340},
+    "Búsqueda por email": {"MySQL": 1, "PostgreSQL": 2, "SQL Server": 3},
+    "Conteo por departamento": {"MySQL": 5, "PostgreSQL": 16, "SQL Server": 476},
+    "Búsqueda rango edad": {"MySQL": 1, "PostgreSQL": 2, "SQL Server": 6},
+    "Agregación salario promedio": {"MySQL": 174, "PostgreSQL": 35, "SQL Server": 55},
+    "Búsqueda en JSON": {"MySQL": 178, "PostgreSQL": 32, "SQL Server": 166},
+    "Consulta compleja": {"MySQL": 77, "PostgreSQL": 20, "SQL Server": 116}
 }
 
 # Crear DataFrames por tipo de consulta
@@ -24,10 +24,13 @@ query_json_complex_df = pd.DataFrame({
     k: data[k] for k in ["Búsqueda en JSON", "Consulta compleja"]
 }).T
 
+# Colores: MySQL (azul), PostgreSQL (verde), SQL Server (rojo)
+colors = ["tab:blue", "tab:green", "tab:red"]
+
 # --- Gráfico 1: Velocidad de Inserción ---
 fig1, ax1 = plt.subplots(figsize=(8, 5))
-insertion_df.plot.bar(ax=ax1, color=["tab:blue", "tab:orange", "tab:green"])
-ax1.set_title("📈 Velocidad de Inserción (docs/segundo)\nMongoDB vs MySQL vs PostgreSQL")
+insertion_df.plot.bar(ax=ax1, color=colors)
+ax1.set_title("📈 Velocidad de Inserción (registros/segundo)\nMySQL vs PostgreSQL vs SQL Server")
 ax1.set_ylabel("docs/segundo")
 ax1.grid(True, axis='y', linestyle='--', alpha=0.6)
 for container in ax1.containers:
@@ -37,11 +40,10 @@ plt.show()
 plt.close(fig1)
 fig1.savefig("./insertvel.png")
 
-
 # --- Gráfico 2: Consultas simples ---
 fig2, ax2 = plt.subplots(figsize=(8, 5))
-query_simple_df.plot.bar(ax=ax2, color=["tab:blue", "tab:orange", "tab:green"])
-ax2.set_title("🔍 Tiempos de Consultas Simples (ms)\nMongoDB vs MySQL vs PostgreSQL")
+query_simple_df.plot.bar(ax=ax2, color=colors)
+ax2.set_title("🔍 Tiempos de Consultas Simples (ms)\nMySQL vs PostgreSQL vs SQL Server")
 ax2.set_ylabel("ms")
 ax2.grid(True, axis='y', linestyle='--', alpha=0.6)
 for container in ax2.containers:
@@ -53,8 +55,8 @@ fig2.savefig("./consultas_simples.png")
 
 # --- Gráfico 3: Conteos y agregaciones ---
 fig3, ax3 = plt.subplots(figsize=(8, 5))
-query_agg_count_df.plot.bar(ax=ax3, color=["tab:blue", "tab:orange", "tab:green"])
-ax3.set_title("🧮 Conteos y Agregaciones (ms)\nMongoDB vs MySQL vs PostgreSQL")
+query_agg_count_df.plot.bar(ax=ax3, color=colors)
+ax3.set_title("🧮 Conteos y Agregaciones (ms)\nMySQL vs PostgreSQL vs SQL Server")
 ax3.set_ylabel("ms")
 ax3.grid(True, axis='y', linestyle='--', alpha=0.6)
 for container in ax3.containers:
@@ -66,8 +68,8 @@ fig3.savefig("./agregacion_salario.png")
 
 # --- Gráfico 4: JSON y consultas complejas ---
 fig4, ax4 = plt.subplots(figsize=(8, 5))
-query_json_complex_df.plot.bar(ax=ax4, color=["tab:orange", "tab:green"])
-ax4.set_title("🔌 JSON y Consultas Complejas (ms)\nMySQL vs PostgreSQL")
+query_json_complex_df.plot.bar(ax=ax4, color=colors)
+ax4.set_title("🔌 JSON y Consultas Complejas (ms)\nMySQL vs PostgreSQL vs SQL Server")
 ax4.set_ylabel("ms")
 ax4.grid(True, axis='y', linestyle='--', alpha=0.6)
 for container in ax4.containers:
